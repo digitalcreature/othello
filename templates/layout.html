@@ -3,9 +3,15 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Hello World!</title>
+		<link rel="stylesheet" href="{{ url_for("static", filename="style.css") }}">
 	</head>
 	<body>
-		{% block content %}
-		{% endblock %}
+		<div class="header">
+			Header Info Stuff
+		</div>
+		<div class="body">
+			{% block content %}
+			{% endblock %}
+		</div>
 	</body>
 </html>

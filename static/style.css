@@ -1,0 +1,44 @@
+* {
+	box-sizing: border-box;;
+}
+
+html, body {
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
+body {
+	font-family: monospace;
+	font-size: 12pt;
+	background-color: #d0d0d0;
+}
+
+div.header {
+	padding: 0.25em 1em;
+	font-size: 2em;
+	background-color: #373737;
+	color: #EEEEEE;
+	min-width: 100%;
+}
+
+div.board {
+	margin:
+	overflow: auto;
+	text-align: center;
+}
+
+table.board {
+	border-spacing: 0;
+}
+
+table.board tr:nth-child(even) td:nth-child(even),
+table.board tr:nth-child(odd) td:nth-child(odd) {
+	background-color: #626262;
+}
+
+td.board.square {
+	background-color: white;
+	width: 3em;
+	height: 3em;
+}

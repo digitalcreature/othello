@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="board">
+	<table class="board">
+	{% for row in range(0, 8) %}
+		<tr class="board row" row={{row}}>
+			{% for col in range(0, 8) %}
+			<td class="board square" row={{row}} col={{col}}>
+				({{col}},{{row}})
+			</div>
+			{% endfor %}
+		</div>
+</div>
+{% endfor %}
+
+</div>
+{% endblock %}
