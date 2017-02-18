@@ -22,6 +22,18 @@ $(document).ready(function() {
 		squares[col][row] = $this;
 	});
 
+	socket.on("prompt team", function() {
+		$("div.teamprompt").show();
+	});
+
+	socket.on("join team", function(team) {
+		$("div.teamprompt").hide();
+	});
+
+	jointeam = function(team) {
+		socket.emit("join team", team);
+	}
+
 	socket.on("set board", function(data) {
 		for (row = 0; row < 8; row ++) {
 			for (col = 0; col < 8; col ++) {

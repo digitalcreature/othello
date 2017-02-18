@@ -1,6 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="board">
+	<div class="teamprompt">
+		<h1>Join Team</h1>
+		<div class="buttons">
+			<button onclick="jointeam('white')">White</button>
+			<button onclick="jointeam('black')">Black</button>
+		</div>
+	</div>
 	<table class="board">
 	{% for row in range(0, 8) %}
 		<tr row={{row}}>
