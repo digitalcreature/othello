@@ -1,3 +1,3 @@
-import app
+import app as production
 
-app.socketio.run(app.app)
+production.socketio.run(production.app, host = "0.0.0.0")

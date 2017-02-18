@@ -6,6 +6,7 @@ services:
        - "5000:5000"
       volumes:
        - .:/app
-      network_mode: "host"
+      depends_on:
+       - redis
    redis:
       image: "redis"

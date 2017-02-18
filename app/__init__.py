@@ -5,10 +5,9 @@ import eventlet
 
 eventlet.monkey_patch()
 
-
 app = Flask("")
-socketio = SocketIO(app, message_queue="redis://")
-redis = Redis()
+socketio = SocketIO(app, message_queue="redis://redis")
+redis = Redis(host="redis")
 
 app.secret_key = "super secret secret key"
 
