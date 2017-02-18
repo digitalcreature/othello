@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-	var socket = io.connect('http://' + document.domain + ':' + location.port);
+	var socket = io.connect(document.domain + ':' + location.port);
 
 	var squares = [];
 	for ( i = 0; i < 8; i ++) {
