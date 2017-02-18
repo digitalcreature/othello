@@ -5,3 +5,4 @@ app = Flask("")
 socketio = SocketIO(app)
 
 from . import views
+from . import events
