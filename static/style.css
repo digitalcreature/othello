@@ -22,9 +22,12 @@ div.header {
 	min-width: 100%;
 }
 
+div.body {
+	padding: 1em 3em;
+}
+
 div.board {
 	display: inline-block;
-	margin: 1em 3em;
 	border-color: #662d09;
 	border-style:  solid;
 	border-width: 0.5em;

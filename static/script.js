@@ -2,8 +2,8 @@ $(document).ready(function() {
 
 	var socket = io.connect('http://' + document.domain + ':' + location.port);
 
-	socket.on('event', function(data) {
-		alert("socket connection established: " + data);
+	socket.on('update user count', function(count) {
+		$("div.user_count").text("User count: " + count);
 	});
 
 

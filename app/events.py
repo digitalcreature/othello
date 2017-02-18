@@ -3,4 +3,10 @@ from flask_socketio import send, emit
 
 @socketio.on("connect")
 def on_connect():
-	emit("event", "you are connected!")
+	user_count = redis.incr("user_count")
+	emit("update user count", user_count, broadcast=True)
+
+@socketio.on("disconnect")
+def on_disconnect():
+	user_count = redis.decr("user_count")
+	emit("update user count", user_count, broadcast=True)
