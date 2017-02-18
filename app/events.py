@@ -10,3 +10,7 @@ def on_connect():
 def on_disconnect():
 	user_count = redis.decr("user_count")
 	emit("update user count", user_count, broadcast=True)
+
+@socketio.on("update board")
+def on_update_board(data):
+	emit("update board", data, broadcast=True)
