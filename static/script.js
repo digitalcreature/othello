@@ -28,6 +28,7 @@ $(document).ready(function() {
 
 	socket.on("join team", function(team) {
 		$("div.teamprompt").hide();
+		$("h2.team").text("You are on team " + team);
 	});
 
 	jointeam = function(team) {

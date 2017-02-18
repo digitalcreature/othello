@@ -1,24 +1,28 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="board">
-	<div class="teamprompt">
-		<h1>Join Team</h1>
-		<div class="buttons">
-			<button onclick="jointeam('white')">White</button>
-			<button onclick="jointeam('black')">Black</button>
-		</div>
-	</div>
-	<table class="board">
-	{% for row in range(0, 8) %}
-		<tr row={{row}}>
-			{% for col in range(0, 8) %}
-			<td row={{row}} col={{col}}>
-				<!-- ({{col}},{{row}}) -->
+<div class="game">
+	<div class="board">
+		<div class="teamprompt">
+			<h1>Join Team</h1>
+			<div class="buttons">
+				<button onclick="jointeam('white')">White</button>
+				<button onclick="jointeam('black')">Black</button>
 			</div>
-			{% endfor %}
 		</div>
-</div>
-{% endfor %}
-
+		<table class="board">
+		{% for row in range(0, 8) %}
+			<tr row={{row}}>
+				{% for col in range(0, 8) %}
+				<td row={{row}} col={{col}}>
+					<!-- ({{col}},{{row}}) -->
+				</td>
+				{% endfor %}
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
+	<div class="info">
+		<h2 class="team"></h2>
+	</div>
 </div>
 {% endblock %}

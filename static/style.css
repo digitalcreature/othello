@@ -36,12 +36,19 @@ div.body {
 	padding: 1em 3em;
 }
 
+div.game {
+	position: relative;
+	padding: 0;
+	margin: 0;
+}
+
 div.board {
 	position: relative;
 	display: inline-block;
 	border-color: #662d09;
 	border-style:  solid;
 	border-width: 0.5em;
+	margin: 0;
 	overflow: auto;
 	text-align: center;
 }
@@ -61,4 +68,7 @@ table.board td {
 
 table.board td:hover {
 	box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.25) inset;
+}
+
+div.info {
 }
