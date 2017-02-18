@@ -1,9 +1,13 @@
 from flask import *
 from flask_socketio import SocketIO
 from redis import Redis
+import eventlet
+
+eventlet.monkey_patch()
+
 
 app = Flask("")
-socketio = SocketIO(app)
+socketio = SocketIO(app, message_queue="redis://")
 redis = Redis()
 
 app.secret_key = "super secret secret key"
