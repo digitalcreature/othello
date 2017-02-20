@@ -1,3 +1,3 @@
-# VThacks IV
+# Othello
 
-<!--  auto generated README.md -->
+A web-based Othello game where everyone has a say.
