@@ -1,3 +1,3 @@
-import app
+import othello
 
-app.socketio.run(app.app, debug=True)
+othello.app.run(host="0.0.0.0", debug=True)

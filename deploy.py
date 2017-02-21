@@ -1,3 +1,3 @@
-import app as production
+import othello
 
-production.socketio.run(production.app, host = "0.0.0.0")
+othello.app.run(host = "0.0.0.0")
