@@ -23,10 +23,14 @@ def choose_team(team):
 		else:
 			return json_response({"error": "invalid team"}, 400)
 	else:
-		return json_response({
-			"error": "already on team",
-			"team": session["team"]
-		}, 403)
+		if team == "leave":
+			session.pop("team", None)
+			return json_response({"team": None}, 200)
+		else:
+			return json_response({
+				"error": "already on team",
+				"team": session["team"]
+			}, 403)
 
 @app.route("/vote", methods=["POST"])
 def vote():
