@@ -26,7 +26,7 @@ def choose_team(team):
 		return json_response({
 			"error": "already on team",
 			"team": session["team"]
-		}, 400)
+		}, 403)
 
 @app.route("/vote", methods=["POST"])
 def vote():

@@ -12,9 +12,12 @@ $(document).ready(function() {
 		squares[col][row] = $this;
 	});
 
-	jointeam = function(team) {
-		// join team
-	}
+	$("button.teamjoin").click(function() {
+		var team = $(this).attr("team");
+		$.post("/team/" + team, function(data, status) {
+			alert(JSON.stringify(data));
+		});
+	});
 
 	$("table.board td").click(function() {
 		var $this = $(this);
@@ -22,4 +25,6 @@ $(document).ready(function() {
 		col = $this.attr("col");
 		// vote for move
 	});
+
+	$("div.teamprompt").show();
 });
