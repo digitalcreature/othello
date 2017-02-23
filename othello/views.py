@@ -1,4 +1,5 @@
 from . import *
+from . import state
 
 TEAMS = ["white", "black"] # valid teams
 BOARD_ROW_COUNT = 8
@@ -7,6 +8,12 @@ BOARD_COL_COUNT = 8
 def json_response(j, code=200):
 	'''json formatted response'''
 	return (json.jsonify(j), code)
+
+def get_user_team():
+	if "team" in session:
+		return session["team"]
+	else:
+		return None
 
 @app.route("/")
 def index():
@@ -37,7 +44,12 @@ def vote():
 	'''vote for a square'''
 	row = int(request.args["r"])
 	col = int(request.args["c"])
-	if row >= 0 and row < BOARD_ROW_COUNT and col >= 0 and col < BOARD_COL_COUNT:
-		return json_response({"row": row, "col": col})
+	team = get_user_team()
+	if team:
+		if row >= 0 and row < BOARD_ROW_COUNT and col >= 0 and col < BOARD_COL_COUNT:
+			votes = state.increment_vote(team, row, col)
+			return json_response({"votes": votes, "row": row, "col": col})
+		else:
+			return json_response({"error": "vote square out of bounds"}, 400)
 	else:
-		return json_response({"error": "vote square out of bounds"}, 400)
+		return json_response({"error": "user is not on a team or it is not user's team's turn'"}, 403)

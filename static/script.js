@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+	var team = null;
+
 	var squares = [];
 	for ( i = 0; i < 8; i ++) {
 		squares[i] = [];
@@ -15,7 +17,13 @@ $(document).ready(function() {
 	$("button.teamjoin").click(function() {
 		var team = $(this).attr("team");
 		$.post("/team/" + team, function(data, status) {
-			alert(JSON.stringify(data));
+			team = data.team;
+			if (team) {
+				$("div.teamprompt").hide();
+			}
+			else {
+				$("div.teamprompt").show();
+			}
 		});
 	});
 
@@ -23,7 +31,9 @@ $(document).ready(function() {
 		var $this = $(this);
 		row = $this.attr("row");
 		col = $this.attr("col");
-		// vote for move
+		$.post("/vote?r=" + row + "&" + "c="+col, function(data, status) {
+			$this.text(data.votes);
+		});
 	});
 
 	$("div.teamprompt").show();
