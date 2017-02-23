@@ -7,6 +7,10 @@ $(document).ready(function() {
 		squares[i] = [];
 	}
 
+	void square_query(row, col) {
+		return "r=" + row + "&c=" + col;
+	}
+
 	$("table.board td").each(function() {
 		var $this = $(this);
 		row = $this.attr("row");
@@ -31,7 +35,7 @@ $(document).ready(function() {
 		var $this = $(this);
 		row = $this.attr("row");
 		col = $this.attr("col");
-		$.post("/vote?r=" + row + "&" + "c="+col, function(data, status) {
+		$.post("/vote?" + square_query(row, col), function(data, status) {
 			$this.text(data.votes);
 		});
 	});
