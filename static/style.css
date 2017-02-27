@@ -66,6 +66,36 @@ table.board td {
 	border-width: 0.2em;
 }
 
+div.piece {
+	margin: 5%;
+	width: 90%;
+	height: 90%;
+	border-radius: 100%;
+}
+
+div.piece.potential {
+	background-color: transparent;
+	border-style: dashed;
+	border-width: 2px;
+}
+div.piece.placed {
+	border-style: none;
+}
+
+div.piece.black.placed {
+	background-color: black;
+}
+div.piece.white.placed {
+	background-color: white;
+}
+
+div.piece.black.potential {
+	border-color: black;
+}
+div.piece.white.potential {
+	border-color: white;
+}
+
 table.board td:hover {
 	box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.25) inset;
 }

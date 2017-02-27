@@ -11,10 +11,15 @@ $(document).ready(function() {
 		squares[i] = [];
 	}
 	$("table.board td").each(function() {
-		var $this = $(this);
-		row = $this.attr("row");
-		col = $this.attr("col");
-		squares[col][row] = $this;
+		var square = $(this);
+		row = square.attr("row");
+		col = square.attr("col");
+		squares[col][row] = square;
+		var piece = square.children("div.piece").first();
+		if (row % 2 == 0) { piece.addClass("placed"); }
+		else { piece.addClass("potential"); }
+		if (col % 2 == 0) { piece.addClass("black"); }
+		else { piece.addClass("white"); }
 	});
 
 	// join a team when pressing the team's button
