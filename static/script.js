@@ -7,19 +7,14 @@ $(document).ready(function() {
 
 	// find the elements for the squares, put in 2d array
 	var squares = [];
-	for ( i = 0; i < 8; i ++) {
+	for (i = 0; i < 8; i ++) {
 		squares[i] = [];
 	}
 	$("table.board td").each(function() {
 		var square = $(this);
 		row = square.attr("row");
 		col = square.attr("col");
-		squares[col][row] = square;
-		var piece = square.children("div.piece").first();
-		if (row % 2 == 0) { piece.addClass("placed"); }
-		else { piece.addClass("potential"); }
-		if (col % 2 == 0) { piece.addClass("black"); }
-		else { piece.addClass("white"); }
+		squares[row][col] = square;
 	});
 
 	// join a team when pressing the team's button
@@ -42,7 +37,6 @@ $(document).ready(function() {
 		row = $this.attr("row");
 		col = $this.attr("col");
 		$.post("/vote?" + square_query(row, col), function(data, status) {
-			$this.text(data.votes);
 		});
 	});
 
@@ -51,14 +45,42 @@ $(document).ready(function() {
 		$.get("/state", action);
 	}
 
+	// clear all pieces from the board
+	function clear_board() {
+		for (row = 0; row < 8; row ++) {
+			for (col = 0; col < 8; col ++) {
+				var piece = squares[row][col].children("div.piece").first();
+				piece.attr("class", "piece"); // remove all classes but the base piece class
+			}
+		}
+	}
+
+	// update board
+	function update_board(board) {
+		for (row = 0; row < 8; row ++) {
+			for (col = 0; col < 8; col ++) {
+				var piece = squares[row][col].children("div.piece").first();
+				var team = board[row][col];
+				if (team) {
+					piece.addClass(team + " placed");
+				}
+				else {
+					piece.attr("class", "piece");
+				}
+			}
+		}
+	}
+
 	// update display to match current gamestate
 	function update_fromstate(state) {
 		var team = state.team;
 		if (team) {
 			$("div.teamprompt").hide();
+			update_board(state.board);
 		}
 		else {
 			$("div.teamprompt").show();
+			clear_board();
 		}
 	}
 
