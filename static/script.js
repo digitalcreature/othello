@@ -1,5 +1,8 @@
 $(document).ready(function() {
 
+	var BOARD_ROW_COUNT = 8;
+	var BOARD_COL_COUNT = 8;
+
 	// build the q string for a square
 	function square_query(row, col) {
 		return "r=" + row + "&c=" + col;
@@ -7,7 +10,7 @@ $(document).ready(function() {
 
 	// find the elements for the squares, put in 2d array
 	var squares = [];
-	for (i = 0; i < 8; i ++) {
+	for (i = 0; i < BOARD_ROW_COUNT; i ++) {
 		squares[i] = [];
 	}
 	$("table.board td").each(function() {
@@ -28,6 +31,7 @@ $(document).ready(function() {
 			else {
 				$("div.teamprompt").show();
 			}
+			get_state(update_fromstate);
 		});
 	});
 
@@ -45,28 +49,61 @@ $(document).ready(function() {
 		$.get("/state", action);
 	}
 
-	// clear all pieces from the board
-	function clear_board() {
-		for (row = 0; row < 8; row ++) {
-			for (col = 0; col < 8; col ++) {
-				var piece = squares[row][col].children("div.piece").first();
-				piece.attr("class", "piece"); // remove all classes but the base piece class
-			}
+	// check if a square is on the board
+	function square_isvalid(row, col) {
+		return row >=0 && row < BOARD_ROW_COUNT && col >= 0 && col < BOARD_COL_COUNT;
+	}
+
+	// get the piece element for square row, col
+	function get_piece(row, col) {
+		return squares[row][col].children("div.piece").first();
+	}
+
+	// count how many pieces will be captured in a certain direction if a square is played
+	function get_capture_count_dir(team, row, col, dr, dc) {
+		var piece = get_piece(row, col)
+		var r = row + dr;
+		var c = col + dc;
+		var oteam = null;
+		var caps = 0;
+		if (team === "white") {
+			oteam = "black";
+		}
+		if (team === "black") {
+			oteam = "white";
+		}
+		while (square_isvalid(r, c) && get_piece(r, c).hasClass(oteam)) {
+			caps ++;
+			r += dr;
+			c += dc;
+		}
+		if (square_isvalid(r, c) && get_piece(r, c).hasClass(team)) {
+			return caps;
+		}
+		else {
+			return 0;
 		}
 	}
 
-	// update board
-	function update_board(board) {
-		for (row = 0; row < 8; row ++) {
-			for (col = 0; col < 8; col ++) {
-				var piece = squares[row][col].children("div.piece").first();
-				var team = board[row][col];
-				if (team) {
-					piece.addClass(team + " placed");
-				}
-				else {
-					piece.attr("class", "piece");
-				}
+	// return total captures for a given move
+	function get_capture_count(team, row, col) {
+		var caps = 0;
+		caps += get_capture_count_dir(team, row, col, -1, -1);
+		caps += get_capture_count_dir(team, row, col, -1,  0);
+		caps += get_capture_count_dir(team, row, col, -1,  1);
+		caps += get_capture_count_dir(team, row, col,  0, -1);
+		caps += get_capture_count_dir(team, row, col,  0,  1);
+		caps += get_capture_count_dir(team, row, col,  1, -1);
+		caps += get_capture_count_dir(team, row, col,  1,  0);
+		caps += get_capture_count_dir(team, row, col,  1,  1);
+		return caps;
+	}
+
+	// clear all pieces from the board
+	function clear_board() {
+		for (row = 0; row < BOARD_ROW_COUNT; row ++) {
+			for (col = 0; col < BOARD_COL_COUNT; col ++) {
+				get_piece(row, col).attr("class", "piece"); // remove all classes but the base piece class
 			}
 		}
 	}
@@ -76,7 +113,28 @@ $(document).ready(function() {
 		var team = state.team;
 		if (team) {
 			$("div.teamprompt").hide();
-			update_board(state.board);
+			for (row = 0; row < BOARD_ROW_COUNT; row ++) {
+				for (col = 0; col < BOARD_COL_COUNT; col ++) {
+					var p = state.board[row][col];
+					if (p) {
+						get_piece(row, col).addClass(p + " placed");
+					}
+					else {
+						get_piece(row, col).attr("class", "piece");
+					}
+				}
+			}
+			for (row = 0; row < BOARD_ROW_COUNT; row ++) {
+				for (col = 0; col < BOARD_COL_COUNT; col ++) {
+					var piece = get_piece(row, col);
+					if (piece.attr("class") === "piece") {
+						var caps = get_capture_count(team, row, col)
+						if (caps > 0) {
+							piece.addClass(team + " potential");
+						}
+					}
+				}
+			}
 		}
 		else {
 			$("div.teamprompt").show();
