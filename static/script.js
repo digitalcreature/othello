@@ -2,15 +2,17 @@ $(document).ready(function() {
 
 	var team = null;
 
-	var squares = [];
-	for ( i = 0; i < 8; i ++) {
-		squares[i] = [];
-	}
 
+	// build the q string for a square
 	void square_query(row, col) {
 		return "r=" + row + "&c=" + col;
 	}
 
+	// find the elements for the squares, put in 2d array
+	var squares = [];
+	for ( i = 0; i < 8; i ++) {
+		squares[i] = [];
+	}
 	$("table.board td").each(function() {
 		var $this = $(this);
 		row = $this.attr("row");
@@ -18,6 +20,7 @@ $(document).ready(function() {
 		squares[col][row] = $this;
 	});
 
+	// join a team when pressing the team's button
 	$("button.teamjoin").click(function() {
 		var team = $(this).attr("team");
 		$.post("/team/" + team, function(data, status) {
@@ -31,6 +34,7 @@ $(document).ready(function() {
 		});
 	});
 
+	// vote for a move
 	$("table.board td").click(function() {
 		var $this = $(this);
 		row = $this.attr("row");
@@ -40,5 +44,6 @@ $(document).ready(function() {
 		});
 	});
 
+	// make sure the prompt for team joining is visible
 	$("div.teamprompt").show();
 });
