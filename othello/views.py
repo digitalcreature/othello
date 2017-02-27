@@ -20,6 +20,14 @@ def index():
 	'''The game itself'''
 	return render_template("othello.html")
 
+@app.route("/state")
+def get_gamestate():
+	'''retrieve current gamestate'''
+	state = {}
+	team = get_user_team()
+	state["team"] = team
+	return json_response(state)
+
 @app.route("/team/<team>", methods=["POST"])
 def choose_team(team):
 	'''Choose a team'''

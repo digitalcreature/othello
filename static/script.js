@@ -1,10 +1,7 @@
 $(document).ready(function() {
 
-	var team = null;
-
-
 	// build the q string for a square
-	void square_query(row, col) {
+	function square_query(row, col) {
 		return "r=" + row + "&c=" + col;
 	}
 
@@ -44,6 +41,23 @@ $(document).ready(function() {
 		});
 	});
 
-	// make sure the prompt for team joining is visible
-	$("div.teamprompt").show();
+	// retrieve game state from server
+	function get_state(action) {
+		$.get("/state", action);
+	}
+
+	// update display to match current gamestate
+	function update_fromstate(state) {
+		var team = state.team;
+		if (team) {
+			$("div.teamprompt").hide();
+		}
+		else {
+			$("div.teamprompt").show();
+		}
+	}
+
+	// make sure state is up to date
+	get_state(update_fromstate);
+
 });
